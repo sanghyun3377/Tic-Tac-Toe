@@ -1,15 +1,16 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tic_tac_toe/game_message.dart';
-import 'package:tic_tac_toe/game_result.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/view/screen/game_board_view_model.dart';
+import 'package:tic_tac_toe/view/widget/game_message.dart';
+import 'package:tic_tac_toe/view/widget/game_result.dart';
 import 'package:tic_tac_toe/game_status.dart';
-import 'package:tic_tac_toe/game_title.dart';
+import 'package:tic_tac_toe/view/widget/game_title.dart';
 import 'package:tic_tac_toe/message.dart';
-import 'package:tic_tac_toe/player1.dart';
-import 'package:tic_tac_toe/player2.dart';
+import 'package:tic_tac_toe/view/widget/player1.dart';
+import 'package:tic_tac_toe/view/widget/player2.dart';
 
 class GameBoard extends StatefulWidget {
   const GameBoard({super.key});
@@ -78,6 +79,7 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final ViewModel = context.watch<GameBoardViewModel>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -93,14 +95,16 @@ class _GameBoardState extends State<GameBoard> {
             playerDisplayContainer(_playerOneTurn),
             gameGridBoard(),
             Visibility(
-                child: menuButton(), visible: _gameStatus != GameStatus.play),
+              visible: _gameStatus != GameStatus.play,
+              child: menuButton(),
+            ),
             Visibility(
+              visible: _gameStatus == GameStatus.play,
               child: GameMessage(
                 message: _playerOneTurn
                     ? Message.playerOneTurn
                     : Message.playerTwoTurn,
               ),
-              visible: _gameStatus == GameStatus.play,
             )
           ]),
         ),
