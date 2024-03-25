@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,15 +10,28 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  void _login() async {
+    await FirebaseAuth.instance.signInAnonymously();
+  }
 
-  void _login() {
-    String email = _emailController.text;
-    String password = _passwordController.text;
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user != null) {
+        print('회원가입이 됐거나 유저가 들어왔다');
+        context.push('/GameBoard');
+        return;
+      }
+      print('회원가입이나 로그인이 필요하다');
+      context.go('/');
+      setState(() {});
+    });
+  }
 
-    // 여기에 로그인 로직을 추가하세요.
-    // 예를 들어, FirebaseAuth를 사용하여 이메일 및 비밀번호로 인증하는 방법을 구현할 수 있습니다.
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -38,24 +53,30 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                  ),
+                Text(
+                  'Tic-Tac-Toe',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: _login,
-                  child: Text('Login'),
+                  child: Text(
+                    '게스트로 로그인',
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                  style: ButtonStyle(
+                      // 버튼크기조절
+                      minimumSize: MaterialStateProperty.all(
+                          const Size(double.infinity, 52)),
+                      //테두리 모양 조절
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.white70)),
                 ),
               ],
             ),

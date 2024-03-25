@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -132,8 +133,6 @@ class _GameBoardState extends State<GameBoard> {
   Widget boardBox(int x, int y, {String mark = ""}) {
     return GestureDetector(
       onTap: () {
-        print(x);
-        print(y);
         if (board[x - 1][y - 1] == "") {
           setState(() {
             _playerOneTurn
