@@ -128,14 +128,16 @@ class _GameBoardState extends State<GameBoard> {
   Widget boardBox(int x, int y, {String mark = ""}) {
     return GestureDetector(
       onTap: () {
+        print(x);
+        print(y);
         if (board[x - 1][y - 1] == "") {
           setState(() {
             _playerOneTurn
                 ? board[x - 1][y - 1] = "O"
-                : board[x - 1][x - 1] = "X";
+                : board[x - 1][y - 1] = "X";
           });
-          gameCheck();
           _playerOneTurn = !_playerOneTurn;
+          gameCheck();
         } else {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("비어 있는 곳만 표시가능합니다.")));
