@@ -19,11 +19,9 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user != null) {
-        print('회원가입이 됐거나 유저가 들어왔다');
         context.push('/Menu');
         return;
       }
-      print('회원가입이나 로그인이 필요하다');
       context.go('/');
       setState(() {});
     });
