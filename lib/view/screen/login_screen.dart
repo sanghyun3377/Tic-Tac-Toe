@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
     FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user != null) {
         print('회원가입이 됐거나 유저가 들어왔다');
-        context.push('/GameBoard');
+        context.push('/Menu');
         return;
       }
       print('회원가입이나 로그인이 필요하다');
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Text(
+                const Text(
                   'Tic-Tac-Toe',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -61,22 +61,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                       fontSize: 20),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: _login,
-                  child: Text(
-                    '게스트로 로그인',
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                  ),
                   style: ButtonStyle(
-                      // 버튼크기조절
                       minimumSize: MaterialStateProperty.all(
                           const Size(double.infinity, 52)),
-                      //테두리 모양 조절
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                       backgroundColor:
                           MaterialStateProperty.all(Colors.white70)),
+                  child: const Text(
+                    '게스트로 로그인',
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
                 ),
               ],
             ),

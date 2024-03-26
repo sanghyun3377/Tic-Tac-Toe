@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/view/screen/game_board.dart';
 import 'package:tic_tac_toe/view/screen/game_board_view_model.dart';
 import 'package:tic_tac_toe/view/screen/login_screen.dart';
+import 'package:tic_tac_toe/view/screen/menu_screen.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -17,6 +18,10 @@ final router = GoRouter(
         create: (_) => GameBoardViewModel(),
         child: const GameBoard(),
       ),
+    ),
+    GoRoute(
+      path: '/Menu',
+      builder: (context, state) => const MenuScreen(),
     ),
   ],
 );
