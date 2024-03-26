@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/view/screen/game_board_view_model.dart';
 import 'package:tic_tac_toe/view/widget/game_message.dart';
@@ -55,7 +56,7 @@ class _GameBoardState extends State<GameBoard> {
 
     // 가로세로 체크
     for (var i = 0; i < 3; i++) {
-      if ((board[i][0] == "O" && board[i][1] == "0" && board[i][2] == "O") ||
+      if ((board[i][0] == "O" && board[i][1] == "O" && board[i][2] == "O") ||
           ((board[0][i]) == "O" && board[1][i] == "O" && board[2][i] == "O")) {
         _gameStatus = GameStatus.playerOneWin;
       } else if ((board[i][0] == "X" &&
@@ -142,7 +143,7 @@ class _GameBoardState extends State<GameBoard> {
           gameCheck();
         } else {
           ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("비어 있는 곳만 표시가능합니다.")));
+              .showSnackBar(const SnackBar(content: Text("비어 있는 곳만 터치가능합니다.")));
         }
       },
       child: Container(
@@ -217,18 +218,12 @@ class _GameBoardState extends State<GameBoard> {
   Widget exitMenuButton() {
     return ElevatedButton(
         onPressed: () {
-          if (Platform.isAndroid) {
-            SystemNavigator.pop();
-          } else if (Platform.isIOS) {
-            exit(0);
-          } else {
-            Navigator.of(context).pop();
-          }
+          context.pop();
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           child: const Text(
-            "게임 종료",
+            "돌아가기",
             style: TextStyle(fontSize: 22),
           ),
         ));

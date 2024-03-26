@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tic_tac_toe/view/widget/circular_graph_widget.dart';
+import 'package:tic_tac_toe/view/widget/play_button.dart';
+import 'package:tic_tac_toe/view/widget/score_text.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -26,77 +29,29 @@ class MenuScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            minimumSize: MaterialStatePropertyAll(
-                                Size(double.infinity, 70)),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.white70)),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.people_alt,
-                              size: 48,
-                              color: Colors.blue,
-                            ),
-                            SizedBox(width: 4),
-                            Text(
-                              textAlign: TextAlign.center,
-                              '오프라인\n2인 게임',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
+                        child: PlayButton(
+                      buttonName: '오프라인\n2인게임',
+                      icon: Icons.people_alt,
+                      onPressed: () {
+                        context.push('/GameBoard');
+                      },
+                    )),
+                    const SizedBox(width: 8),
                     Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            minimumSize: MaterialStatePropertyAll(
-                                Size(double.infinity, 70)),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.white70)),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.wifi,
-                              size: 48,
-                              color: Colors.blue,
-                            ),
-                            SizedBox(width: 4),
-                            Text(
-                              textAlign: TextAlign.center,
-                              '온라인\n자동 게임',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                        child: PlayButton(
+                      buttonName: '온라인\n자동게임',
+                      icon: Icons.wifi,
+                      onPressed: () {},
+                    )),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 SingleChildScrollView(
                   child: Container(
                     width: double.infinity,
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                             begin: Alignment.topCenter,
                             colors: [
                               Colors.white38,
@@ -115,81 +70,32 @@ class MenuScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
-                          height: 32,
-                        ),
-                        WinLossDrawCircularGraph(
-                          graphName: 'total : 123판',
+                        const SizedBox(height: 32),
+                        const WinLossDrawCircularGraph(
+                          graphName: 'Total : 123판',
                           winCount: 30,
                           drawCount: 4,
                           lossCount: 50,
                           radius: 40,
                         ),
-                        SizedBox(
-                          height: 16,
-                        ),
+                        const SizedBox(height: 16),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    '승리',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  Text(
-                                    '3판(12%)',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red),
-                                  ),
-                                ],
+                              ScoreText(
+                                scoreName: '승리',
+                                score: '3판(12%)',
+                                color: Colors.red,
                               ),
-                              Column(
-                                children: [
-                                  Text(
-                                    '무승부',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  Text(
-                                    '51판(14%)',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.green[800]),
-                                  ),
-                                ],
+                              ScoreText(
+                                scoreName: '무승부',
+                                score: '51판(73%)',
+                                color: Colors.green[800] as Color,
                               ),
-                              Column(
-                                children: [
-                                  Text(
-                                    '패배',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  Text(
-                                    '32판(23%)',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue[800]),
-                                  ),
-                                ],
+                              ScoreText(
+                                scoreName: '패배',
+                                score: '32판(23%)',
+                                color: Colors.blue[800] as Color,
                               ),
                             ])
                       ],
