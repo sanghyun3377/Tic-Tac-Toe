@@ -18,7 +18,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        // 텍스트 폼 필드의 커서 색상 변경
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.white, // 원하는 색상으로 변경
+        ),
+        // 텍스트 폼 필드의 최대 글자 수 색상 변경
+        inputDecorationTheme: const InputDecorationTheme(
+          counterStyle: TextStyle(color: Colors.white), // 원하는 색상으로 변경
+        ),
+      ),
       routerConfig: router,
     );
   }

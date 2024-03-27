@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tic_tac_toe/view/widget/circular_graph_widget.dart';
@@ -41,7 +42,9 @@ class MenuScreen extends StatelessWidget {
                         child: PlayButton(
                       buttonName: '온라인\n자동게임',
                       icon: Icons.wifi,
-                      onPressed: () {},
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
                     )),
                   ],
                 ),
@@ -63,7 +66,7 @@ class MenuScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         const Text(
-                          '하상현님 반갑습니다!',
+                          ' 반갑습니다!',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
