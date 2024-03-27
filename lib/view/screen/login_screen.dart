@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tic_tac_toe/view/widget/one_answer_dialog.dart';
+import 'package:tic_tac_toe/view/widget/two_answer_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,16 +33,36 @@ class _LoginScreenState extends State<LoginScreen> {
                       context.pop();
                     },
                     title: '이미 존재하는 닉네임 입니다.',
+                    nickname: controller.text,
                     firstButton: '닫기');
               });
           return;
         }
       }
-      UserCredential user = await FirebaseAuth.instance.signInAnonymously();
-      await FirebaseFirestore.instance
-          .collection('user')
-          .doc(user.user!.uid)
-          .set({'nickname': controller.text});
+      if (context.mounted) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return TwoAnswerDialog(
+                onTap: () async {
+                  UserCredential user =
+                      await FirebaseAuth.instance.signInAnonymously();
+                  await FirebaseFirestore.instance
+                      .collection('user')
+                      .doc(user.user!.uid)
+                      .set({'nickname': controller.text});
+                },
+                onPressed: () {
+                  context.pop();
+                },
+                title: '사용가능한 닉네임 입니다.',
+                nickname: controller.text,
+                firstButton: '취소하기',
+                secoundButton: '사용하기',
+              );
+            });
+        return;
+      }
     }
   }
 
